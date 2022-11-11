@@ -75,6 +75,13 @@ impl HidApiLock {
                     HID_API_LOCK.store(false, Ordering::SeqCst);
                     return Err(HidError::InitializationError);
                 }
+
+                #[cfg(target_os = "macos")]
+                {
+                    dbg!("setting non-exclusive device access for MacOS");
+                    ffi::hid_darwin_set_open_exclusive(0);
+                }
+
                 Ok(HidApiLock)
             }
         } else {

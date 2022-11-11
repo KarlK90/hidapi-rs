@@ -119,4 +119,6 @@ extern "C" {
         maxlen: size_t,
     ) -> c_int;
     pub fn hid_error(device: *mut HidDevice) -> *const wchar_t;
+    #[cfg(target_os = "macos")]
+    pub fn hid_darwin_set_open_exclusive(open_exclusive: c_int);
 }
